@@ -76,11 +76,12 @@ def info():
 
     print('Elapsed:\t%s' % bold(delta_fmt(elapsed)))
 
-    for_eight = timedelta(hours=DAY_HOURS) - elapsed
-    print('Eight in:\t%s' % delta_fmt(for_eight))
+    remaining = timedelta(hours=DAY_HOURS) - elapsed
+    if remaining > timedelta(0):
+        print('Done in:\t%s' % delta_fmt(remaining))
 
-    absolute = datetime.now() + for_eight
-    print('Finish at:\t%s' % absolute.strftime('%H:%M'))
+        absolute = datetime.now() + remaining
+        print('Finish at:\t%s' % absolute.strftime('%H:%M'))
 
     if notes:
         print('Notes:\t%s' % ', '.join(notes))
