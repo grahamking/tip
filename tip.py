@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 
 FILENAME = os.path.expanduser('~/.tip')
 FORMAT = '%Y-%m-%d %H:%M'
+DAY_HOURS = 8       # Target hours for the day
 
 
 def on():
@@ -75,14 +76,14 @@ def info():
 
     print('Elapsed:\t%s' % bold(delta_fmt(elapsed)))
 
-    for_eight = timedelta(hours=8) - elapsed
+    for_eight = timedelta(hours=DAY_HOURS) - elapsed
     print('Eight in:\t%s' % delta_fmt(for_eight))
 
     absolute = datetime.now() + for_eight
     print('Finish at:\t%s' % absolute.strftime('%H:%M'))
 
     if notes:
-        print(', '.join(notes))
+        print('Notes:\t%s' % ', '.join(notes))
 
 
 def now():
@@ -105,10 +106,10 @@ def delta_fmt(delta):
     if secs > 60:
         mins = secs / 60
         secs -= mins * 60
-        display += '%d mins ' % mins
+        display += '%0.2d mins ' % mins
 
     if secs:
-        display += '%d secs' % secs
+        display += '%0.2d secs' % secs
 
     return display
 
