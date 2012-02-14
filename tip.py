@@ -75,13 +75,12 @@ class TimeFile(object):
         detail = []
         detail.append('Timer is: %s' % self.status)
 
+        detail.append('Elapsed:\t%s' % bold(delta_fmt(self.elapsed)))
+
         remaining = timedelta(hours=DAY_HOURS) - self.elapsed
         if remaining > timedelta(0):
             absolute = datetime.now() + remaining
 
-        detail.append('Elapsed:\t%s' % bold(delta_fmt(self.elapsed)))
-
-        if remaining:
             detail.append('Remaining:\t%s' % delta_fmt(remaining))
 
             if self.status == 'ON':
