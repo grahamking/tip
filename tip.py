@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Time It Please: Easy command line timer.
 """
 
@@ -35,7 +35,11 @@ class TimeFile(object):
         start = None
         stop = None
 
-        datafile = open(self.filename, 'rt')
+        try:
+            datafile = open(self.filename, 'rt')
+        except IOError:
+            return
+
         for line in datafile:
 
             line = line.strip()
@@ -57,6 +61,7 @@ class TimeFile(object):
                 if start:
                     self.elapsed += stop - start
                     start = None
+        datafile.close()
 
         # Catch any START without a matching STOP
         if start:
@@ -103,6 +108,8 @@ class TimeFile(object):
 
         today = datetime.now()
         start = self.file_date
+        if not start:
+            return False
         return start.day != today.day or start.month != today.month
 
 
